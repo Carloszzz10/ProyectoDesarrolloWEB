@@ -1,0 +1,76 @@
+.container1 {
+    width: 50%;
+    height: 80px;
+    margin: 0 auto;
+    margin-bottom: 35px;
+}
+
+body{
+    background-color: var(--colormainbody);
+ 
+
+}
+input[type="file"] {
+    width: 100%;          /* Hace que el botón tome todo el ancho del contenedor */
+    color: transparent;    /* Oculta el texto del archivo subido */
+    appearance: none;      /* Elimina el estilo por defecto del botón de archivo */
+   
+    padding: 10px;
+}
+
+.container2 {
+    background-color: var(--colorcontenedor);
+    width: 80%;
+    margin: 20px auto;
+    padding: 15px;
+    padding-left: 70px;
+    padding-right: 10px;
+    border: 1px solid rgb(179, 177, 177);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    height: 87vh;
+}
+.textoform{
+    color: var(--registrocolor);
+    line-height: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.casillasform {
+    width: 80%;
+    border-radius: 12px;
+}
+.container3 {
+    background-color: rgb(170, 170, 170);
+    border: 2px solid rgb(138, 159, 246);
+    border-radius: 15px;
+
+    height: 30vh;
+    width: 30vh;
+}
+
+.botonregistrar{
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-radius: 25px;
+    width: 100vh;
+}
+
+.botonregistrar:hover {
+    background-color: #218838;
+}
+
+a{
+    text-decoration: none;
+}
+
+.iconologin{
+      font-size: 25px; 
+    margin-left: 8px; 
+    display: inline-block; 
+    vertical-align: middle; 
+}
+.mensajeerror{
+    position: absolute;
+}

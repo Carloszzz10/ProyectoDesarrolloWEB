@@ -1,0 +1,716 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
+
+
+:root {
+    --colorbarralateral: rgb(255, 255, 255);
+    --colortexto: black;
+    --colortextodelmenu: rgb(134, 136, 144);
+    --botoncolor: black;
+    --colorbotontexto: white;
+    --colormainbody: rgb(220, 220, 220);
+    --colortextomain: black;
+    --colormenuhover: rgb(238, 238, 238);
+    --colormenuhovertexto: black;
+    --colorlinea: rgb(180, 180, 180);
+    --colobaseswitch: rgb(204, 200, 200);
+    --colorswitchcirculo: rgb(240, 228, 228);
+    --colorscroll: rgb(192, 192, 192);
+    --colorscrollhover: rgb(134, 134, 134);
+    --colormenuhome: #f1f1c1;
+--colormodal:white;
+    --linealist: rgb(74, 72, 72);
+
+    --colorbotonusuario: rgb(119, 197, 235);
+
+    /*sesion*/
+    --colorcontenedor: #E0F7FA;
+    --titulosesion: rgb(0, 0, 0);
+    --registrocolor: black;
+
+}
+
+.dark-mode {
+    --colormenuhome: #6c6e70;
+    --colormainbody: rgb(35, 33, 33);
+    --colortextomain: rgb(255, 255, 255);
+    /*
+    --colorbarralateral: rgb(44, 45, 49);
+    */
+    --colormodal:black;
+    --colorbarralateral: rgb(35, 33, 33);
+    --colortexto: white;
+    --colortextodelmenu: rgb(110, 110, 117);
+    --botoncolor: rgb(255, 255, 255);
+    --colorbotontexto: rgb(0, 0, 0);
+
+    --colormenuhover: rgb(0, 0, 0);
+    --colormenuhovertexto: rgb(238, 238, 238);
+    --colorlinea: rgb(91, 90, 90);
+
+    --colobaseswitch: rgb(0, 255, 8);
+    --colorswitchcirculo: rgb(255, 255, 255);
+    --colorscroll: rgb(68, 69, 74);
+    --colorscrollhover: rgb(85, 85, 85);
+
+
+    --linealist: #ddd;
+    /*sesion*/
+    --colorcontenedor: #302f2f;
+    --titulosesion: rgb(12, 53, 203);
+    --registrocolor: #E0F7FA;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background-color: var(--colormainbody);
+    color: var(--colortextomain);
+}
+
+button {
+    background-color: transparent;
+    border: transparent;
+}
+
+.menu {
+    background-color: var(--botoncolor);
+    color: var(--colorbotontexto);
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    font-size: 37px;
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    right: 30px;
+    top: 15px;
+    z-index: 1500;
+}
+
+/* nombre de la página*/
+.barralateral {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 300px;
+    height: 100%;
+    padding: 20px;
+   
+    background-color: var(--colormainbody);
+    transition: width 0.7s ease, background-color 0.3s ease, left 0.5s ease;
+    overflow: hidden;
+    z-index: 500;
+}
+
+.barralateral span {
+    font-size: 18px;
+    width: 100px;
+    white-space: nowrap;
+    text-align: left;
+    opacity: 1;
+    transition: opacity 0.5s ease, width 0.5s ease;
+    font-weight: bold;
+    /*nuevo*/
+}
+
+.barralateral span.oculto {
+    opacity: 0;
+    width: 0;
+}
+
+.barralateral .nombrepag {
+    color: var(--colortexto);
+    width: 100%;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.barralateral .nombrepag .logoimagen {
+    cursor: pointer;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    max-width: 100%;
+}
+
+/*Barra para el diseño responsivo*/
+.minibarralateral {
+    width: 100px;
+}
+
+/*boton*/
+.barralateral .boton {
+    width: 100%;
+    height: 45px;
+    border: none;
+    background-color: var(--botoncolor);
+    color: var(--colorbotontexto);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.barralateral .boton:hover {
+    border: none;
+    background-color: rgb(0, 0, 255);
+
+}
+
+.barralateral .boton ion-icon {
+    min-width: 7vh;
+    font-size: 35px;
+    margin-left: 25px;
+}
+
+
+/*Menu Navegación*/
+.barralateral .navegacion {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.barralateral .navegacion::-webkit-scrollbar {
+    width: 5px;
+    cursor: pointer;
+}
+
+.barralateral .navegacion::-webkit-scrollbar-thumb {
+    background-color: var(--colorscroll);
+}
+
+.barralateral .navegacion::-webkit-scrollbar-thumb:hover {
+    background-color: var(--colorscrollhover);
+}
+
+.barralateral .navegacion ul {
+    padding-left: 0;
+}
+
+.barralateral .navegacion li {
+    list-style: none;
+    display: flex;
+    margin-bottom: 9px;
+}
+
+.barralateral .navegacion hr {
+    width: 95%;
+}
+
+.barralateral .navegacion a {
+    width: 95%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 10px;
+    color: var(--colortextodelmenu);
+    font-size: 7vh;
+}
+
+.barralateral .navegacion a:hover {
+    background-color: var(--colormenuhover);
+    color: var(--colormenuhovertexto);
+}
+
+.barralateral .navegacion ion-icon {
+    font-size: 27px;
+    min-width: 7vh;
+    margin-left: 4px;
+}
+
+/*Linea de separación*/
+.barralateral .linea {
+    width: 100%;
+    height: 2px;
+    margin-top: 0.5rem;
+    background-color: var(--colorlinea);
+}
+
+/* Modo Oscuro*/
+.barralateral .modo-oscuro {
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.barralateral .modo-oscuro .info {
+    width: 200px;
+    height: 45px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    color: var(--colortextodelmenu);
+}
+
+.barralateral .modo-oscuro .info ion-icon {
+    width: 50px;
+    font-size: 20px;
+}
+
+/* switch modo oscuro*/
+.barralateral .modo-oscuro .switch {
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    cursor: pointer;
+}
+
+.barralateral .modo-oscuro .base {
+    position: relative;
+    display: flex;
+    align-self: center;
+    width: 35px;
+    height: 20px;
+    background-color: var(--colobaseswitch);
+    border-radius: 50px;
+}
+
+.barralateral .modo-oscuro .circulo {
+    position: absolute;
+    width: 18px;
+    height: 90%;
+    background-color: var(--colorswitchcirculo);
+    border-radius: 50%;
+    left: 2px;
+    transition: left 0.5s ease;
+}
+
+.barralateral .modo-oscuro .circulo.prendido {
+    left: 15px;
+}
+
+/*usuario*/
+.barralateral .usuario {
+    position: relative;
+    width: 100%;
+    display: flex;
+
+}
+
+.barralateral .usuario img {
+    margin-top: 10px;
+    margin-right: 10px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    max-width: 50px;
+    height: 50px;
+    height:  100%;
+    border-radius: 50%;
+}
+
+.barralateral .usuario .info-usuario {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--colortexto);
+    overflow: hidden;
+}
+
+.barralateral .usuario .nombreuser-email {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+.barralateral .usuario .nombreuser-email .email {
+    
+    font-size: 15px;
+    color: var(--colortexto); /* Color gris claro */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 150px; /* Ancho mínimo para que no se trunque tan rápido */
+    max-width: 250px; /* Ancho máximo más amplio para evitar truncado innecesario */
+    font-weight: 500;
+
+}
+.barralateral .usuario .nombre {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.barralateral .usuario .email {
+    font-size: 13px;
+
+}
+
+.barralateral .usuario ion-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+main {
+    margin-left: 300px;
+    transition: margin-left 0.6s ease;
+}
+
+main.minimain {
+    margin-left: 90px;
+}
+
+/*Publicaciones --------------------------------------------------------------------------*/
+
+.publicacion-margen {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgb(63, 63, 70);
+    width: 100%;
+}
+
+.publicacion {
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.publicacion .usuario {
+    width: 10%;
+    height: 56px;
+}
+
+.publicacion .usuario>img {
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    max-width: 100%;
+    max-height: 50px;
+    border-radius: 50%;
+}
+
+.publicacion .contenido {
+    width: 90%;
+    font-style: 20px;
+}
+
+
+
+.publicacion .contenido .pub-usuario {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.publicacion .contenido .pub-usuario ion-icon{
+    cursor: pointer;
+}
+
+.publicacion .contenido .pub-usuario > div{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.publicacion .contenido .pub-usuario> div >div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: rgb(100, 116, 139);
+}
+
+.publicacion .contenido>p {
+    overflow-wrap: break-word;
+    text-align: justify;
+}
+
+.publicacion .contenido .cont-img {
+    display: flex;
+    justify-content: start;
+    margin: 0.5rem 0;
+    border-radius: 1rem;
+}
+
+.publicacion .contenido .cont-img>img {
+    max-height: 600px;
+    aspect-ratio: auto;
+    max-width: 100%;
+    border-radius: 1rem;
+}
+
+.publicacion .contenido .cont-social {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    color: rgb(156, 163, 175);
+}
+
+.publicacion .contenido .cont-social>div {
+    display: flex;
+}
+
+.publicacion .contenido .cont-social>div>button {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.publicacion .contenido .cont-social>div>button>ion-icon {
+    font-size: 1.5rem;
+    color: rgb(156, 163, 175);
+    margin-right: 0.5rem;
+}
+
+.publicacion .contenido .cont-social>div>button>p {
+    margin: 0;
+}
+
+/*Sidebar ---------------------------------------------------------------------------*/
+.sidebar {
+  
+    position: sticky;
+    height: 100vh;
+    top: 0;
+    overflow-y: auto;
+
+    scrollbar-width: none;
+    scrollbar-color: #171717 #171717;
+}
+
+.sidebar:hover {
+    scrollbar-color: #403f3f #171717;
+}
+
+/* Modal ----------------------------------------------------------------------------*/
+dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background-color: #000;
+    border-radius: 1rem;
+    max-height: 100%;
+    z-index: 1000;
+}
+
+dialog section {
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+dialog section menu {
+    padding: 1rem 0;
+}
+
+dialog section menu ion-icon {
+    color: #fff;
+    font-size: 2rem;
+}
+
+
+dialog section .mod-contenido {
+    padding: 0.5rem 0 1.5rem 0;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+dialog section .mod-contenido>.mod-usuario {
+    width: 10%;
+}
+
+dialog section .mod-contenido>.mod-usuario>img {
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    max-width: 50px;
+    height: 50px;
+    height:  100%;
+    border-radius: 50%;
+}
+
+dialog section .mod-contenido>.mod-text {
+    width: 90%;
+}
+
+dialog section .mod-contenido>.mod-text>textarea {
+    width: 100%;
+    border: 0;
+    background-color: transparent;
+    resize: none;
+    color: #fff;
+}
+
+dialog section .mod-contenido>.mod-text>textarea:focus {
+    outline: none;
+}
+
+dialog section .mod-social {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 0;
+    align-items: center;
+    border-top: 1px solid #777;
+    color: #fff;
+}
+
+dialog section .mod-social > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+dialog section .mod-social button {
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+dialog section .mod-social button > ion-icon{
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 100%;
+}
+
+dialog section .mod-social button > ion-icon:hover{
+    background-color: hsla(0, 0%, 50%, 0.23);
+}
+
+dialog section .mod-social .mod-boton {
+    background-color: #403f3f;
+    padding: 4px 8px;
+    border-radius: 1rem;
+}
+
+/*-----------------------------------------------------------------------------------------*/
+
+
+/*Responsive*/
+@media screen and (max-width:991px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+@media screen and (max-height:660px) {
+    .barralateral .nombrepag {
+        margin-bottom: 5px;
+    }
+}
+
+
+@media screen and (max-width:600px) {
+    .barralateral {
+        position: fixed;
+        /*display: none;*/
+        left: -300px;
+    }
+
+    .maxbarralateral {
+        /* display: flex;*/
+        left: 0;
+    }
+
+    .usuario .botonusuario {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    main.minimain {
+        margin-left: 0;
+    }
+}
+
+.active {
+    background-color: var(--colormenuhover);
+    color: var(--colormenuhovertexto);
+
+}
+
+.active ion-icon {
+    color: var(--colortexto);
+}
+
+/*
+.info-usuario {
+    display: flex;
+    align-items: center;
+}*/
+
+/*Sin iniciar sesión*/
+.usuario .botonusuario {
+    border-radius: 15px;
+    width: 100%;
+    border: none;
+    box-shadow: 0px 2px 7px black;
+    ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    margin-left: 5px;
+    margin-top: 15px;
+    background-color: var(--colorbotonusuario);
+    font-weight: bold;
+}
+
+
+.usuario .botonusuario:hover {
+    background-color: rgb(91, 233, 193);
+}
+
+a {
+    text-decoration: none;
+
+}
+
+
+/*Ya iniciado sesión*/
+
+.dropdown-menu {
+    min-width: 150px;
+    right: 0;
+    left: auto;
+    text-align: left;
+    background-color: var(--colorbarralateral);
+    z-index: 1000;
+}
+
+.dropdown-item {
+    color: var(--colortextodelmenu);
+}
+
+.dropdown-item:hover {
+    background-color: var(--colormenuhover);
+    color: var(--colormenuhovertexto);
+}
+
+.img-anuncio{
+        width: 30%;
+}

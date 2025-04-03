@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>UTP FORO | User Dashboard</title>
+        <link rel="icon" th:href="@{/Imagenes/utp_logo.png}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- FontAwesome CSS para iconos -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/StyleDashboard.css}">
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="profile">
+                <center><img th:src="@{/Imagenes/Perfil.png}" alt=""></center>
+                <div class="nombreuser-email">
+                    <!-- <span th:text="${nombre}" class="nombre"></span> -->
+                    <center><span style="color: white" sec:authentication="principal.username" class="email">Email</span></center>
+                </div>
+                <center><p>Welcome</p></center>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/dashboard}"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/Anuncios}"><i class="fa-solid fa-rectangle-ad"></i> Anuncios </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/usuarios}"><i class="fas fa-cube"></i> Moderacion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/verreportes}"><i class="fas fa-cube"></i> Ver Reportes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/auditoria}"><i class="fa-solid fa-square-poll-vertical"></i> Auditoria</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/Reports}"><i class="fas fa-cube"></i> Contactanos-reportes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/asignar-rol}"><i class="fas fa-user"></i> User administradores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/comunidad/registrar}"><i class="fas fa-user"></i> Registrar Comunidad</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/logout}">Cerrar Sesión</a>
+                </li>
+                <li>
+                    <a  th:href="@{/}" class="mt-5">
+
+                        <span>Volver al INICIO</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <main>
+            <div class="content">
+                <div class="container mt-5">
+                    <!-- Botón para crear un nuevo anuncio -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>Anuncios</h2>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearAnuncioModal">
+                            Crear Anuncio
+                        </button>
+                    </div>
+
+                    <!-- Listado de anuncios -->
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Contenido</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="anuncio : ${anuncios.content}">
+                                <td th:text="${anuncio.titulo}">Título</td>
+                                <td>
+                                    <div class="contenido-corto" 
+                                         th:text="${#strings.length(anuncio.contenido) > 100} ? ${#strings.substring(anuncio.contenido, 0, 100) + '...'} : ${anuncio.contenido}">
+                                    </div>
+
+                                    <div class="contenido-completo" 
+                                         th:if="${#strings.length(anuncio.contenido) > 100}" 
+                                         th:text="${anuncio.contenido}" 
+                                         style="display:none;">
+                                    </div>
+
+                                    <!-- Mostrar el botón solo si el contenido supera 100 caracteres -->
+                                    <button th:if="${#strings.length(anuncio.contenido) > 100}" 
+                                            class="btn btn-link btn-sm ver-mas-btn" 
+                                            onclick="toggleVerMas(this)">
+                                        Ver más
+                                    </button>
+                                </td>
+
+
+                                <td>
+                                    <img th:src="${anuncio.imageUrl}" alt="Imagen" class="img-thumbnail" style="max-width: 150px;" th:if="${anuncio.imageUrl != null}">
+                                    <span th:if="${anuncio.imageUrl == null}">No tiene</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{'/dashboard/Anuncios/eliminar/' + ${anuncio.id}}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirmarEliminacion();">
+                                        Eliminar
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal para crear un nuevo anuncio -->
+        <div class="modal fade" id="crearAnuncioModal" tabindex="-1" aria-labelledby="crearAnuncioLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="crearAnuncioLabel">Crear Nuevo Anuncio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/dashboard/Anuncios}" method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título</label>
+                                <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Ingresa el título" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contenido" class="form-label">Contenido</label>
+                                <textarea id="contenido" name="contenido" class="form-control" rows="4" placeholder="Escribe el contenido" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Imagen</label>
+                                <input type="file" id="image" name="image" class="form-control">
+                            </div>
+                            <input type="hidden" name="usuarioId" th:value="${usuarioId}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Crear Anuncio</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+                                           function confirmarEliminacion() {
+                                               return confirm("¿Estás seguro de que deseas eliminar este anuncio?");
+                                           }
+        </script>
+        <script>
+            function toggleVerMas(button) {
+                const corto = button.parentElement.querySelector('.contenido-corto');
+                const completo = button.parentElement.querySelector('.contenido-completo');
+
+                if (completo.style.display === 'none') {
+                    corto.style.display = 'none';
+                    completo.style.display = 'block';
+                    button.textContent = 'Ver menos';
+                } else {
+                    corto.style.display = 'block';
+                    completo.style.display = 'none';
+                    button.textContent = 'Ver más';
+                }
+            }
+        </script>
+
+
+    </body>
+</html>

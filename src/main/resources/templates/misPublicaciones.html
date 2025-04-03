@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head th:replace="~{layout :: head}">
+        <title>Mis Publicaciones</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="container-fluid mx-3">
+
+        <div th:replace="~{layout :: dialog}"></div>
+
+        <div th:replace="~{layout :: dialogEditar}"></div>
+
+      <div class="menu">
+                <ion-icon name="menu"></ion-icon>
+            </div>
+
+            <div class="barralateral minibarralateral">
+                <div>
+                    <div class="nombrepag">
+                        <img id="cloud" class="logoimagen" th:src="@{/Imagenes/UtpForo.png}" alt="LogoImagen">
+                    </div>
+                    <button class="boton" id="updateDetails">
+                        <ion-icon name="add-circle-sharp"></ion-icon>
+                        <span>Publicación</span>
+                    </button>
+                </div>
+                <nav class="navegacion">
+                    <ul>
+                        <li>
+                            <a  th:href="@{/}">
+                                <ion-icon name="home-sharp"></ion-icon>
+                                <span>INICIO</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/comunidad/comunidades}">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>Comunidades</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="active" th:href="@{/MisPublicaciones}">
+                                <ion-icon name="person-circle-sharp"></ion-icon>
+                                <span>Mis Publicaciones</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/Favoritos}">
+                                <ion-icon name="bookmarks-sharp"></ion-icon>
+                                <span>Favoritos</span>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a th:href="@{/Nosotros}">
+                                <ion-icon name="information-circle-sharp"></ion-icon>
+                                <span>¿Quienes Somos?</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/contactanos}">
+                                <ion-icon name="mail-sharp"></ion-icon>
+                                <span>Contactanos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/Anuncios}">
+                                <ion-icon name="notifications-sharp"></ion-icon>
+                                <span>Anuncios</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div>
+                    <div class="linea"></div>
+                    <div class="modo-oscuro">
+                        <div class="info">
+                            <ion-icon name="moon-sharp"></ion-icon>
+                            <span>Modo Oscuro</span>
+                        </div>
+                        <div class="switch">
+                            <div class="base">
+                                <div class="circulo"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                        <div class="usuario">
+                            <img th:src="@{/Imagenes/Perfil.png}" alt="" class="imagenusuario">
+                            <button class="botonusuario">Inicia Sesión/Registrarse</button>
+                        </div>
+                    </a>
+
+
+                        <div sec:authorize="isAuthenticated()">
+                        <div class="usuario dropend">
+                            <img th:src="${imagePerfil != null ? imagePerfil : 'Imagenes/Perfil.png'}" alt="">
+                            <div class="info-usuario">
+                                <div class="nombreuser-email">
+                                    <span sec:authentication="principal.username" class="email">Email</span>
+                                </div>
+                                <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-vertical-sharp" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                 <li><a class="dropdown-item"  th:href="@{/PerfilUsuario}">Mi perfil</a></li>
+                                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                                    <li sec:authorize="hasAnyAuthority('rol_2', 'rol_3')">
+                                        <a class="dropdown-item" th:href="@{/dashboard}">Ir al Dashboard</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <main>
+            <!-- Publicacion-->
+            <div class="publicacion-margen" th:each="post : ${posts}">
+                <div class="publicacion">
+                    <div class="usuario">
+                        <img th:src="${post.usuario.imagePerfil != null ? post.usuario.imagePerfil : 'Imagenes/Perfil.png'}" alt="Imagen de usuario">
+                    </div>
+                    <div class="contenido">
+                        <div class="pub-usuario">
+                            <div>
+                                <p th:text="${post.usuario.nombres}">Nombre</p>
+                                <div>                                           
+                                    <p><span th:text="${post.usuario.usuario}">Nombre de usuario</span></p>
+                                    <p><span>•</span></p>
+                                    <p><span th:text="${post.formattedDate}">Fecha</span></p>
+                                </div>
+                            </div>
+                            <div class="dropdown" th:if="${post.usuario.id == usuarioId}">
+                                <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-horizontal-outline" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" th:href="@{/post/eliminar/{postId}(postId=${post.id})}" 
+                                           onclick="return confirm('¿Estás seguro de que deseas eliminar esta publicación?')" >Eliminar post</a></li>
+                                    <li><a class="dropdown-item" href="javascript:void(0)" 
+                                           th:onclick="abrirModalEditar([[${post.id}]], [[${post.contenido}]], [[${post.imageUrl}]])"
+                                           >Editar Post</a></li>        
+                                </ul>
+                            </div>
+                        </div>
+                        <p th:text="${post.contenido}" ></p>
+                        <div class="cont-img" th:if="${post.imageUrl != null}">
+                            <img th:src="${post.imageUrl}" alt="Imagen Publicación">
+                        </div>
+                        <div class="cont-social">
+                            <div>
+                                <button>
+                                    <ion-icon name="chatbox-outline"></ion-icon>
+                                    <p id="Contador_comentario">0</p>
+                                </button>
+                                <button>
+                                    <ion-icon name="heart-outline"></ion-icon>
+                                    <p id="Contador_likes">0</p>
+                                </button>
+                            </div>
+                            <div>
+                                <button>
+                                    <ion-icon name="bookmark-outline"></ion-icon>
+                                    <p id="Contador_guardados">0</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--           
+                    <form th:if="${#authentication.id == post.usuario.id}"
+                          th:action="@{/post/delete/{id}(id=${tweet.id})}"
+                          method="post">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                    -->
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,313 @@
+
+
+main > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-out forwards;
+}
+
+main > *:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+main > *:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+main > *:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* Fondo principal */
+main{
+    background: #e0e0e0 no-repeat center center/cover;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Oscurece la imagen */
+    z-index: 1;
+}
+
+main > * {
+    position: relative;
+    z-index: 2; /* Contenidos sobre la capa oscura */
+}
+
+/* Hero Section */
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1s ease-out;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.cta-btn {
+    margin-top: 1rem;
+    padding: 0.8rem 2rem;
+    background: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    transform: scale(1.1);
+    background-color: #e57a00;
+}
+
+/* About Us Section */
+.about-us {
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    animation: fadeIn 1s ease-out;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #ff8c00;
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+.about-us p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #ffffff;
+}
+
+/* Tarjetas con animaciones */
+.cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+    color: #333;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    max-width: 300px;
+    text-align: left;
+    animation: fadeInUp 1s ease-out;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Team Section */
+/* Estilo general para la sección "Nuestro Equipo" */
+.team-members {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Imágenes cuadradas */
+.team-member img {
+    width: 185px; /* Ajusta el tamaño según prefieras */
+    height: 190px; /* Mantén igual a width para que sea cuadrado */
+    border-radius: 10px; /* Bordes ligeramente redondeados, ajusta según necesites */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover */
+.team-member img:hover {
+    transform: scale(1.05); /* Pequeña ampliación */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Información del miembro */
+.team-member h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff; /* Ajusta según tu diseño */
+}
+
+.team-member p {
+    font-size: 1rem;
+    color: #dddddd; /* Ajusta según tu diseño */
+    margin-bottom: 1rem;
+}
+
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Estilos generales */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* Estilo por defecto (modo claro) */
+.cards .card {
+    background: rgba(255, 255, 255, 0.8); /* Fondo claro */
+    color: #333;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Modo oscuro */
+body.dark-mode .cards .card {
+    background: rgba(40, 40, 40, 0.9); /* Fondo oscuro */
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+/* Sección "Las Mejores Comunidades" */
+.best-communities {
+    padding: 3rem 1rem;
+   
+    text-align: center;
+    color: #f7f6f6;
+}
+
+.best-communities .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #fdfdfc;
+    position: relative;
+}
+
+.best-communities .section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #ff8c00;
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+.best-communities .section-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #a49d9d;
+}
+
+/* Diseño de las tarjetas */
+.communities-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.community-card {
+    background: rgba(255, 255, 255, 0.8); /* Fondo claro */
+    color: #333;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+body.dark-mode .community-card {
+    background: rgba(40, 40, 40, 0.9); /* Fondo oscuro */
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+.community-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.community-card h3 {
+    font-size: 1.5rem;
+    color: #ff8c00;
+    margin-bottom: 1rem;
+}
+
+.community-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.community-card .learn-more {
+    font-size: 1rem;
+    color: #ff8c00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}

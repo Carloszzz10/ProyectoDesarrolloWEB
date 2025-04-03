@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{layout :: head}">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Contactanos</title>
+        
+        <link th:href="@{/css/StylePrincipal.css}" rel="stylesheet" />
+        <script th:src="@{/js/Contacto.js}" defer></script>
+    </head>
+
+ <body class="container-fluid mx-3">
+        
+        <div th:replace="~{layout :: dialog}"></div>
+        
+        <!-- Incluir la barra lateral -->
+        <div th:replace="~{layout :: barraLateral}"></div>
+        
+        <main>
+            <div class="p-4 border-bottom border-secondary">
+                <h1 class="text-center">Contáctanos</h1>
+            </div>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <form id="contactoForm" th:action="@{/salvar}" method="post" enctype="multipart/form-data" onsubmit="validarFormulario(event)">
+                            <div class="form-group mb-3">
+                                <label for="motivo">Motivo:</label>
+                                <select class="form-control border rounded" name="motivo" id="motivo" autofocus>
+                                    <option value="Seleccionar" label="Seleccionar"></option>
+                                    <option value="Consulta" label="Consulta"></option>
+                                    <option value="Sugerencia" label="Sugerencia"></option>
+                                    <option value="Reclamo" label="Reclamo"></option>
+                                </select>
+                                <span id="errorMotivo" class="error"></span>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="detalle">Detalle:</label>
+                                <input type="hidden" name="usuarioId"  th:value="${usuarioId}">
+                                <input type="hidden" name="usuarioUsuario"  th:value="${usuarioUsuario}">
+                                <textarea class="form-control" name="detalle" rows="3" id="detalle" autofocus></textarea>
+                                <span id="errorDetalle" class="error"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </form>
+                    </div>
+                </div>    
+            </div>
+        </main>
+        
+        <script th:src="@{/js/contacto.js}"></script>
+        <script th:src="@{/js/main1.js}"></script>
+    </body>
+</html>

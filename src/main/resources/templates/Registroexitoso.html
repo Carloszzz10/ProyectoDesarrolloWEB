@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTP CLASS FORO</title>
+    <link rel="icon" th:href="@{/Imagenes/utp_logo.png}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/StylePrincipal.css}">
+    <link rel="stylesheet" th:href="@{/css/styleregistro.css}">
+    <script th:src="@{/Js/publicar.js}" defer></script>
+     <style>
+     
+        
+        h1 {
+            color: #007bff;
+        }
+        .alert {
+            background-color: #e9f7ef;
+            color: #333;
+            border: 1px solid #c3e6cb;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+ <body class="container-fluid mx-3">
+    <!--Modal para la publicacion de posts-->
+    <dialog id="favDialog">
+        <form method="dialog">
+            <section>
+                <div>
+                    <menu>
+                        <button id="cancel" type="reset">
+                            <ion-icon name="close-outline"></ion-icon>
+                        </button>
+                    </menu>
+                </div>
+                <div>
+                    <div class="mod-contenido">
+                        <div class="mod-usuario">
+                            <img th:src="@{/Imagenes/perfilpepe.png}" alt="Foto de Perfil del Usuario">
+                        </div>
+                        <div class="mod-text">
+                            <textarea name="" id="autoResizeTextarea" maxlength="400" autofocus></textarea>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mod-social">
+                    <div>
+                        <button>Img</button>
+                        <button>emj</button>
+                    </div>
+                    <div class="mod-boton">
+                        <button type="submit" onclick="publicarPost()">
+                            Confirmar
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </dialog>
+    <!--------------------------------------->
+    <div class="menu">
+        <ion-icon name="menu"></ion-icon>
+    </div>
+    <div class="barralateral minibarralateral">
+        <div>
+            <div class="nombrepag">
+                <img id="cloud" class="logoimagen" th:src="@{/Imagenes/UtpForo.png}" alt="LogoImagen">
+            </div>
+            <button class="boton" id="updateDetails">
+                <ion-icon name="add-circle-sharp"></ion-icon>
+                <span>Publicación</span>
+            </button>
+        </div>
+        <nav class="navegacion">
+            <ul>
+                <li>
+                    <a class="" th:href="@{/}">
+                        <ion-icon name="home-sharp"></ion-icon>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/comunidad/comunidades}">
+                        <ion-icon class="mr-2 icon md hydrated" name="logo-buffer" role="img"></ion-icon>
+                        <span>Comunidades</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <ion-icon class="mr-2 icon md hydrated" name="person-circle-sharp" role="img"></ion-icon>
+                        <span>Mis Publicaciones</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="">
+                        <ion-icon class="mr-2 icon md hydrated" name="bookmarks-sharp" role="img"></ion-icon>
+                        <span>Favoritos</span>
+                    </a>
+                </li>
+                <hr>
+                <li>
+                    <a th:href="@{/Nosotros}">
+                        <ion-icon class="mr-2 icon md hydrated" name="information-circle-sharp" role="img"></ion-icon>
+                        <span>¿Quienes Somos?</span >
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/Contactanos}">
+                        <ion-icon class="mr-2 icon md hydrated" name="mail-sharp" role="img"></ion-icon>
+                        <span>Contactanos</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/Anuncios}">
+                        <ion-icon name="notifications-sharp"></ion-icon>
+                        <span>Anuncios</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div>
+            <div class="linea">
+            </div>
+            <div class="modo-oscuro">
+                <div class="info">
+                    <ion-icon name="moon-sharp"></ion-icon>
+                    <span>Modo Oscuro</span>
+                </div>
+                <div class="switch">
+                    <div class="base">
+                        <div class="circulo">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="usuario dropend">
+                <img th:src="@{/Imagenes/Perfil.png}" alt="">
+                <div class="info-usuario">
+                    <div class="nombreuser-email">
+                        <span class="nombre" th:text="${SuNombre}">Nombre</span>
+                        <span class="email" th:text="${CorreoLogin}">Correo</span>
+                    </div>
+
+                    <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-vertical-sharp" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                        <li><a class="dropdown-item" href="#">Configuración</a></li>
+                        <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="text-center">
+                <h1>¡Bienvenido, <span th:text="${bienvenidaNombre}">Nombre Usuario</span>!</h1>
+                <h4>Nos alegra que te hayas registrado en ForoWeb.</h4>
+                <p>Por favor, revisa tu correo electrónico para activar tu cuenta y empezar a disfrutar de nuestra comunidad.</p>
+            </div>
+        </div>
+        
+        <div class="container container2 mt-5">
+            <h3 class="text-center"><strong>Información de Registro</strong></h3>
+            <div class="container mt-5">
+                <div class="alert" role="alert">
+                    <p><strong>Nombre Completo:</strong> <span th:text="${usuario.nombres}">Nombre</span> <span th:text="${usuario.apellidos}">Apellido</span></p>
+                    <p><strong>Correo Electrónico:</strong> <span th:text="${usuario.usuario}">Correo</span></p>
+                    <p><strong>Número de Contacto:</strong> <span th:text="${usuario.numero}">Número</span></p>
+                   
+                </div>
+
+                <h4 class="mt-4 text-center">Datos de Contacto</h4>
+                <p class="text-center">Si tienes alguna duda, contáctanos al siguiente número: <strong>98355809</strong></p>
+                <p class="text-center">O puedes escribirnos a: <strong>utpforo@gmail.com</strong></p>
+
+                <div class="text-center mt-5">
+                    <a th:href="@{/}" class="btn btn-primary d-flex align-items-center justify-content-center">
+                        Ir a Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script th:src="@{/Js/main1.js}"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn .jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Activación de Cuenta - ForoWeb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+        p {
+            color: #333;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .activate-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h1>¡Bienvenido a ForoWeb!</h1>
+        <p>Para completar tu registro, por favor activa tu cuenta haciendo clic en el botón a continuación.</p>
+        <div class="button-container">
+            <a href="#" th:href="${mensaje}" class="activate-button">Activar Cuenta</a>
+        </div>
+        <p>Si no has solicitado esta cuenta, ignora este mensaje.</p>
+        <div class="footer">
+            © 2024 ForoWeb. Todos los derechos reservados.
+        </div>
+    </div>
+</body>
+</html>

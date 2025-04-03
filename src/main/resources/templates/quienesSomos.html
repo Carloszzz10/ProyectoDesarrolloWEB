@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+              crossorigin="anonymous">
+       
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+                integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous" defer></script>
+
+        <link rel="icon" th:href="@{/Imagenes/utp_logo.png}">
+        <link rel="stylesheet" th:href="@{/css/Stylehome.css}">
+        <link rel="stylesheet" th:href="@{/css/StylePrincipal.css}">
+        <link rel="stylesheet" th:href="@{/css/StylePublicacion.css}">
+      
+        <script th:src="@{/Js/main1.js}" defer></script>
+        <script th:src="@{/Js/publicar.js}" defer></script>
+        <link rel="stylesheet" th:href="@{/css/somos.css}" />
+        <title>Foro UTP</title>
+        
+  <link rel="stylesheet" th:href="@{/css/Stylesomos.css}" />
+    </head>
+
+   <body class="container-fluid mx-3">
+ <div th:replace="~{layout :: dialog}"></div>
+        
+   <div class="menu">
+                <ion-icon name="menu"></ion-icon>
+            </div>
+
+            <div class="barralateral minibarralateral">
+                <div>
+                    <div class="nombrepag">
+                        <img id="cloud" class="logoimagen" th:src="@{/Imagenes/UtpForo.png}" alt="LogoImagen">
+                    </div>
+                    <button class="boton" id="updateDetails">
+                        <ion-icon name="add-circle-sharp"></ion-icon>
+                        <span>Publicación</span>
+                    </button>
+                </div>
+                <nav class="navegacion">
+                    <ul>
+                        <li>
+                            <a  th:href="@{/}">
+                                <ion-icon name="home-sharp"></ion-icon>
+                                <span>INICIO</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/comunidad/comunidades}">
+                                <ion-icon name="logo-buffer"></ion-icon>
+                                <span>Comunidades</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/MisPublicaciones}">
+                                <ion-icon name="person-circle-sharp"></ion-icon>
+                                <span>Mis Publicaciones</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/Favoritos}">
+                                <ion-icon name="bookmarks-sharp"></ion-icon>
+                                <span>Favoritos</span>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a class="active" th:href="@{/Nosotros}">
+                                <ion-icon name="information-circle-sharp"></ion-icon>
+                                <span>¿Quienes Somos?</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/contactanos}">
+                                <ion-icon name="mail-sharp"></ion-icon>
+                                <span>Contactanos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/Anuncios}">
+                                <ion-icon name="notifications-sharp"></ion-icon>
+                                <span>Anuncios</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div>
+                    <div class="linea"></div>
+                    <div class="modo-oscuro">
+                        <div class="info">
+                            <ion-icon name="moon-sharp"></ion-icon>
+                            <span>Modo Oscuro</span>
+                        </div>
+                        <div class="switch">
+                            <div class="base">
+                                <div class="circulo"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                        <div class="usuario">
+                            <img th:src="@{/Imagenes/Perfil.png}" alt="" class="imagenusuario">
+                            <button class="botonusuario">Inicia Sesión/Registrarse</button>
+                        </div>
+                    </a>
+
+
+                    <div sec:authorize="isAuthenticated()">
+                        <div class="usuario dropend">
+                            <img th:src="${imagePerfil != null ? imagePerfil : 'Imagenes/Perfil.png'}" alt="">
+                            <div class="info-usuario">
+                                <div class="nombreuser-email">
+                                    <span sec:authentication="principal.username" class="email">Email</span>
+                                </div>
+                                <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-vertical-sharp" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <li><a class="dropdown-item"  th:href="@{/PerfilUsuario}">Mi perfil</a></li>
+                                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                                    <li sec:authorize="hasAnyAuthority('Moderador', 'Administrador')">
+                                        <a class="dropdown-item" th:href="@{/dashboard}">Ir al Dashboard</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+
+    <main id="somos">
+         <div class="container">
+                <div class="row">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Conecta, Colabora, Crece</h2>
+                <p>Bienvenidos al Foro Universitario, el espacio donde las ideas se encuentran y el conocimiento fluye.</p>
+                <a href="#team" class="cta-btn">Conoce al Equipo</a>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="about-us">
+            <div class="container">
+                <h2 class="section-title">Quiénes Somos</h2>
+                <p>
+                    Somos una comunidad dedicada a potenciar la colaboración académica y profesional entre estudiantes y docentes de nuestra universidad. Aquí encontrarás un entorno donde compartir ideas y crecer juntos.
+                </p>
+                <div class="cards">
+                    <div class="card" data-aos="fade-up">
+                        <h3>Misión</h3>
+                        <p>Proveer un espacio inclusivo para el intercambio de conocimientos y el aprendizaje colaborativo.</p>
+                    </div>
+                    <div class="card" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Visión</h3>
+                        <p>Convertirnos en el foro académico más influyente y respetado a nivel nacional.</p>
+                    </div>
+                    <div class="card" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Valores</h3>
+                        <ul>
+                            <li>Inclusión</li>
+                            <li>Innovación</li>
+                            <li>Respeto</li>
+                            <li>Colaboración</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="best-communities">
+            <div class="container">
+                <h2 class="section-title">Las Mejores Comunidades</h2>
+                <p class="section-description">
+                    Estas son algunas de las comunidades que destacan por su colaboración, creatividad y contribución al aprendizaje continuo.
+                </p>
+                <div class="communities-grid">
+                    <div class="community-card" data-aos="zoom-in">
+                        <h3>Foro de Innovación</h3>
+                        <p>
+                            Un espacio donde estudiantes y docentes comparten ideas revolucionarias para resolver los problemas del futuro.
+                        </p>
+                        <a href="#" class="learn-more">Descubrir más</a>
+                    </div>
+                    <div class="community-card" data-aos="zoom-in" data-aos-delay="100">
+                        <h3>Club de Tecnología</h3>
+                        <p>
+                            Ideal para los apasionados de la tecnología, donde se comparten recursos, proyectos y eventos relacionados con el mundo tech.
+                        </p>
+                        <a href="#" class="learn-more">Descubrir más</a>
+                    </div>
+                    <div class="community-card" data-aos="zoom-in" data-aos-delay="200">
+                        <h3>Red de Emprendedores</h3>
+                        <p>
+                            Un foro que conecta mentes emprendedoras para crear negocios y proyectos con impacto social.
+                        </p>
+                        <a href="#" class="learn-more">Descubrir más</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      <!-- Team Section -->
+<!-- Team Section -->
+<section id="team" class="team">
+    <div class="container">
+        <h2 class="section-title text-center">Nuestro Equipo</h2>
+        <div class="row">
+            <!-- Integrante 1 -->
+            <div class="col-md-4 col-sm-6 text-center team-member" data-aos="flip-left" data-aos-delay="300">
+                <ion-icon name="code-slash-outline" style="font-size: 80px; color: #007BFF;"></ion-icon>
+                <h4>Carlos Llacsahuanga</h4>
+                <p>Programador</p>
+            </div>
+            <!-- Integrante 2 -->
+            <div class="col-md-4 col-sm-6 text-center team-member" data-aos="flip-left" data-aos-delay="400">
+                <ion-icon name="construct-outline" style="font-size: 80px; color: #28A745;"></ion-icon>
+                <h4>Palacios Zapata Rodrigo</h4>
+                <p>Programador</p>
+            </div>
+            <!-- Integrante 3 -->
+            <div class="col-md-4 col-sm-6 text-center team-member" data-aos="flip-left" data-aos-delay="500">
+                <ion-icon name="globe-outline" style="font-size: 80px; color: #FFC107;"></ion-icon>
+                <h4>Gueseppe Garcia Lara</h4>
+                <p>Programador </p>
+            </div>
+            <!-- Integrante 4 -->
+            <div class="col-md-4 col-sm-6 text-center team-member" data-aos="flip-left" data-aos-delay="600">
+                <ion-icon name="bug-outline" style="font-size: 80px; color: #FF5733;"></ion-icon>
+                <h4>Palacios Chero Josue</h4>
+                <p>Programador</p>
+            </div>
+            <!-- Integrante 5 -->
+            <div class="col-md-4 col-sm-6 text-center team-member" data-aos="flip-left" data-aos-delay="700">
+                <ion-icon name="desktop-outline" style="font-size: 80px; color: #007BFF;"></ion-icon>
+                <h4>Andres</h4>
+                <p>Programador</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+                </div>
+
+
+             </div>
+     </div>
+
+        </main>
+        <script th:src="@{/Js/main1.js}"></script>
+       
+       <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+        <script th:src="@{/js/main1.js}"></script>
+  
+    
+    </body>
+</html>
+
+

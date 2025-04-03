@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(35, 33, 33) !important;
+}
+
+.container1 {
+    background-color: ghostwhite;
+    width: 90vh;
+    height: 42vh;
+    margin-bottom: 50vh;
+    padding: 15px;
+    border: 2px solid rgb(189, 189, 189);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgb(39, 39, 39);
+    box-sizing: border-box;
+color: black;
+}
+
+.input1 {
+    max-width: 70%;
+
+}
+
+.centro {
+    display: flex;
+    justify-content: center;
+}
+
+.boton1 {
+    background-color: darkgrey;
+    width: 30%;
+    text-align: center;
+    margin-top: 1vh;
+}
+.boton1:hover {
+    background-color: rgb(182, 244, 120);
+}

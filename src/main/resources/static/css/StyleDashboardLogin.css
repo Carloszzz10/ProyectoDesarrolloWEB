@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #888; /* Fondo negro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-box {
+    background-color: #2c2c2c; /* Fondo gris oscuro */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    position: relative;
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 24px;
+}
+
+.user-box {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.user-box input {
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    pointer-events: none;
+    transition: 0.5s;
+    color: #aaa;
+}
+
+.user-box input:focus ~ label,
+.user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #00bcd4; /* Color azul claro cuando el campo está activo */
+    font-size: 12px;
+}
+
+.user-box i {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #888;
+}
+
+.submit-button {
+    background-color: #00bcd4; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Tamaño del botón */
+    font-size: 16px; /* Tamaño del texto */
+    border: none; /* Quitar el borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor a pointer */
+    transition: background-color 0.3s ease; /* Transición para el hover */
+}
+
+.submit-button:hover {
+    background-color: #0097a7; /* Color de fondo cuando el cursor está encima */
+}
+
+.submit-button:active {
+    background-color: #00838f; /* Color cuando se hace clic */
+    box-shadow: 0 2px #006064; /* Sombra interior al hacer clic */
+    transform: translateY(2px); /* Efecto de clic */
+}

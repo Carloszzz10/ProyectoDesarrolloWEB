@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Gestión de Usuarios - Baneos</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery UI para autocompletado -->
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" th:href="@{/css/StyleDashboard.css}">
+        <!-- FontAwesome CSS para iconos -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="profile">
+                <center><img th:src="@{/Imagenes/Perfil.png}" alt=""></center>
+                <div class="nombreuser-email">
+                    <!-- <span th:text="${nombre}" class="nombre"></span> -->
+                    <center><span style="color: white" sec:authentication="principal.username" class="email">Email</span></center>
+                </div>
+                <center><p>Welcome</p></center>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/dashboard}"><i class="fas fa-tachometer-alt"></i> Dashboard </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/Anuncios}"><i class="fa-solid fa-rectangle-ad"></i> Anuncios </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/baneos}"><i class="fas fa-cube"></i> Moderacion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/verreportes}"><i class="fas fa-cube"></i> Ver Reportes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/auditoria}"><i class="fa-solid fa-square-poll-vertical"></i> Auditoria</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/Reports}"><i class="fas fa-cube"></i> Contactanos-reportes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard/asignar-rol}"><i class="fas fa-user"></i> User administradores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/comunidad/registrar}"><i class="fas fa-user"></i> Registrar Comunidad</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/logout}">Cerrar Sesión</a>
+                </li>
+                <li>
+                    <a  th:href="@{/}" class="mt-5">
+
+                        <span>Volver al INICIO</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h2>Gestión de Usuarios</h2>
+
+            <!-- Formulario de Baneo -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    Banear Usuario
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/banear}" method="post">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Usuario</label>
+                                <input type="text" id="usuarioBusqueda" name="username" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Duración del Baneo</label>
+                                <select name="duracion" class="form-control" id="duracionBaneo">
+                                    <option value="1">1 Día</option>
+                                    <option value="7">1 Semana</option>
+                                    <option value="30">1 Mes</option>
+                                    <option value="90">3 Meses</option>
+                                    <option value="365">1 Año</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Razón</label>
+                                <input type="text" name="razon" class="form-control" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-danger mt-3">Banear</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tabla de Usuarios Baneados -->
+            <div class="card">
+                <div class="card-header">
+                    Usuarios Baneados
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Baneado por</th>
+                                <th>Razón</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="baneo : ${baneos}">
+                                <td th:text="${baneo.usuario.usuario}"></td>
+                                <td th:text="${baneo.administradorId}"></td>
+                                <td th:text="${baneo.razon}"></td>
+                                <td th:text="${#temporals.format(baneo.fechaInicio, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${#temporals.format(baneo.fechaFin, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td>
+                                    <form th:action="@{/admin/desbanear}" method="post"th:unless="${!baneo.activo}">
+                                        <input type="hidden" name="username" th:value="${baneo.usuario.usuario}">
+                                        <button type="submit" class="btn btn-sm btn-warning">Desbanear</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Paginación -->
+                    <nav th:if="${baneos.totalPages > 1}">
+                        <ul class="pagination">
+                            <li class="page-item" th:classappend="${baneos.number == 0 ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{/admin/usuarios(page=${baneos.number - 1})}">Anterior</a>
+                            </li>
+                            <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, baneos.totalPages - 1)}"
+                                th:classappend="${pageNumber == baneos.number ? 'active' : ''}">
+                                <a class="page-link" th:href="@{/admin/usuarios(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+                            </li>
+                            <li class="page-item" th:classappend="${baneos.number == baneos.totalPages - 1 ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{/admin/usuarios(page=${baneos.number + 1})}">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts para autocompletado -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                // Obtener lista de usuarios para autocompletado
+                var usuarios = /*[[${listaUsuarios}]]*/ [];
+
+                $("#usuarioBusqueda").autocomplete({
+                    source: usuarios,
+                    minLength: 2
+                });
+
+                // Configurar fecha automáticamente al seleccionar duración
+                $("#duracionBaneo").change(function () {
+                    var duracion = parseInt($(this).val());
+                    var fechaActual = new Date();
+                    var fechaFin = new Date(fechaActual.getTime() + (duracion * 24 * 60 * 60 * 1000));
+
+                    //(yyyy-MM-dd'T'HH:mm)
+                    var formatoFecha = fechaFin.getFullYear() + '-' +
+                            String(fechaFin.getMonth() + 1).padStart(2, '0') + '-' +
+                            String(fechaFin.getDate()).padStart(2, '0') + 'T' +
+                            String(fechaFin.getHours()).padStart(2, '0') + ':' +
+                            String(fechaFin.getMinutes()).padStart(2, '0');
+
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'fechaFin',
+                        value: formatoFecha
+                    }).appendTo('form');
+                });
+            });
+        </script>
+    </body>
+</html>

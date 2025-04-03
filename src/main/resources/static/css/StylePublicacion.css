@@ -1,0 +1,126 @@
+    /* Estilos del modal */
+    /* Estilos de la sección de datos del usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    background-color: #d3d3d3;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ced4da;
+}
+
+.user-name {
+    font-weight: bold;
+    color: black;
+    margin: 0;
+}
+
+.user-email {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+.modal-section {
+    padding: 0 20px;
+    border-radius: 10px;
+    background-color: var(--colormodal);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cancel-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-close {
+    font-size: 24px;
+    color: var(--colortexto);
+}
+
+.mod-contenido {
+    display: flex;
+    align-items: center;
+  
+    margin-top: 10px;
+}
+
+
+
+.mod-text {
+    flex-grow: 1;
+}
+
+.textarea1 {
+    width: 100%;
+    height: 190px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid black; 
+    
+    
+    color: var(--colortexto) !important; 
+    background-color: #f0f0f0; 
+    
+    font-size: 16px;
+}
+
+.textarea::placeholder {
+    color: #888888; 
+    opacity: 1; 
+}
+.char-count {
+  
+    font-size: 12px;
+    text-align: right;
+   color: red;
+}
+
+.mod-social {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+   
+}
+
+.icon-upload{
+    color: var(--colortexto);
+}
+
+.upload-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-upload {
+    font-size: 24px;
+}
+
+.file-info {
+    margin-top: 5px;
+    color: var(--colortexto);
+}
+
+.confirm-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+ 
+    color: white;
+    cursor: pointer;
+}

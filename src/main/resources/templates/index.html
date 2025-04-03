@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{layout :: head}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>UTP CLASS FORO</title>
+
+    </head>
+
+    <body class="container-fluid mx-3">
+
+        <div th:replace="~{layout :: dialog}"></div>
+
+        <div th:replace="~{layout :: dialogEditar}"></div>
+
+        <div th:replace="~{layout :: barraLateral}"></div>
+
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 p-0" id="posts-container">
+
+       
+
+
+                        <!--Publicaciones-->
+                        <div class="publicacion-margen" th:each="post : ${posts}">
+                            <div class="publicacion">
+                                <div class="usuario">
+                                    <img th:src="${post.usuario.imagePerfil != null ? post.usuario.imagePerfil : 'Imagenes/Perfil.png'}" alt="Imagen de usuario">
+                                </div>
+                                <div class="contenido">
+                                    <div class="pub-usuario">
+                                        <div>
+                                            <p th:text="${post.usuario.nombres}">Nombre</p>
+                                            <div>                                           
+                                                <p><span th:text="${post.usuario.usuario}">Nombre de usuario</span></p>
+                                                <p><span>•</span></p>
+                                                <p class="mx-5"><span th:text="${post.formattedDate}">Fecha</span></p>
+                                              <p style="color:cyan"><span th:text="${post.nombreComunidad}">Nombre de la comunidad</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown" th:if="${post.usuario.id == usuarioId or #authorization.expression('hasAnyAuthority(''Moderador'', ''Administrador'')')}">
+                                            <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-horizontal-outline" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <!--Eliminar publicacion-->
+                                                <li><a class="dropdown-item" th:href="@{/post/eliminar/{postId}(postId=${post.id})}" 
+                                                       onclick="return confirm('¿Estás seguro de que deseas eliminar esta publicación?')" >Eliminar post</a></li>
+                                                <!--Editar publicacion-->
+                                                <li><a class="dropdown-item" href="javascript:void(0)" 
+                                                       th:onclick="abrirModalEditar([[${post.id}]], [[${post.contenido}]], [[${post.imageUrl}]])"
+                                                       >Editar Post</a></li>
+                                                <!--Reportar publicacion-->
+                                                <li><a class="dropdown-item" href="javascript:void(0)" 
+                                                       th:onclick="abrirModalReporte([[${post.id}]])"
+                                                       >Reportar Post</a></li>
+                                                <!--<li><a class="dropdown-item" th:href="javascript:void(0)" th:onclick="abrirModalReporte([[${post.id}]])">Reportar Post</a></li>
+                                                -->
+                                                <li class="dropdown-item" sec:authorize="hasAnyAuthority('Moderador', 'Administrador')">
+                                                    <a class="dropdown-item" href="javascript:void(0)" th:onclick="abrirModalBanear([[${post.usuario.usuario}]])">
+                                                        Banear Usuario</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <p th:text="${post.contenido}" ></p>
+                                    <div class="cont-img" th:if="${post.imageUrl != null}">
+                                        <img th:src="${post.imageUrl}" alt="Imagen Publicación">
+                                    </div>
+                                    <div class="cont-social">
+                                        <div>
+                                            <button th:onclick="'window.location.href=\'/comentarios/' + ${post.id} + '\''">
+                                             <ion-icon name="chatbox-outline"></ion-icon>
+                                            <p id="Contador_comentario">0</p>
+                                            </button>
+                                            <button>
+                                                <ion-icon name="heart-outline"></ion-icon>
+                                                <p id="Contador_likes">0</p>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <button>
+                                                <ion-icon name="bookmark-outline"></ion-icon>
+                                                <p id="Contador_guardados">0</p>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!------------------------------------------------------------------>                        
+
+                    </div>
+
+
+
+                    <!-- Sidebar Area -->
+                    <div class="sidebar col-lg-4">
+                        <!-- Featured on Meta Section -->
+                        <center><h1 class="mt-2"> ANUNCIOS </h1></center>
+                        <div class="sidebar-section">
+                            
+                                            <div th:if="${anuncioReciente != null}" class="card">
+    <!-- Mostrar imagen del anuncio si está disponible -->
+                             <center>
+                            <img th:if="${anuncioReciente.imageUrl != null}" 
+                                     th:src="${anuncioReciente.imageUrl}" 
+                                         class="card-img-top" 
+                                      alt="Imagen del anuncio" 
+                                     style="max-width: 30%; height: auto; border-radius: 8px;">
+                                  </center>
+
+                               <div class="card-body">
+                           <!-- Título del anuncio -->
+                                <h5 class="card-title" th:text="${anuncioReciente.titulo}">Título del Anuncio</h5>
+
+                                 <!-- Contenido del anuncio con "Ver más" -->
+                                 <p class="card-text">
+                                <!-- Texto corto que muestra solo los primeros 100 caracteres -->
+                               <span class="short-text" th:text="${#strings.abbreviate(anuncioReciente.contenido, 100)}"></span>
+
+                              <!-- Texto completo del anuncio, inicialmente oculto -->
+                               <span class="full-text d-none" th:text="${anuncioReciente.contenido}"></span>
+
+                                <!-- Enlace para mostrar más -->
+                                <a href="#" class="see-more-link" th:if="${mostrarVerMas}" onclick="toggleText(event)">Ver más</a>
+                                          </p>
+
+                                          <!-- Fecha de publicación -->
+                                <span th:text="${fechaFormateada}">Fecha</span>
+    </div>
+</div>
+
+<!-- Opcional: Mensaje alternativo si no hay anuncio -->
+<div th:if="${anuncioReciente == null}">
+    <p>No hay anuncios recientes</p>
+</div>
+                        </div>
+
+                        <!-- Collectives Section -->
+                      
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!--MODAL PARA REPORTAR PUBLICACIONES-->
+        <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalLabel">Reportar Publicación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/reportar}" method="post">
+                            <div class="mb-3">
+                                <label for="motivoReporte" class="form-label">Motivo del reporte</label>
+                                <select class="form-select" id="motivoReporte" name="motivo">
+                                    <option value="spam">Spam</option>
+                                    <option value="contenidoInapropiado">Contenido inapropiado</option>
+                                    <option value="abuso">Abuso</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="razon" class="form-label">Razón del reporte</label>
+                                <textarea class="form-control" id="razon" name="razon" rows="3" placeholder="Describe la razón del reporte"></textarea>
+                            </div>
+                            <input type="hidden" name="postId" id="postId">
+                            <button type="submit" class="btn btn-primary">Enviar Reporte</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin del modal-->
+        <!-- Modal para Banear Usuario -->
+<div class="modal fade" id="modalBanearUsuario" tabindex="-1" aria-labelledby="modalBanearUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBanearUsuarioLabel">Banear Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/admin/banear}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="usuarioABanear" name="username">
+                    <div class="mb-3">
+                        <label for="razonBan" class="form-label">Razón del Baneo</label>
+                        <textarea class="form-control" id="razonBan" name="razon" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fechaFinBan" class="form-label">Fecha de Fin del Baneo</label>
+                        <input type="datetime-local" class="form-control" id="fechaFinBan" name="fechaFin" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Banear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+        <script th:inline="javascript">
+            /*[[${userRoleId}]]*/
+            let userRoleId = [[${userRoleId}]];
+            document.addEventListener("DOMContentLoaded", function () {
+                if (userRoleId !== 2 && userRoleId !== 3) {
+                    document.getElementById("dashboardLink").style.display = "none";
+                }
+            });
+            //ABrir el modal
+            function abrirModalReporte(postId) {
+                document.getElementById('postId').value = postId;
+                var reportModal = new bootstrap.Modal(document.getElementById('reportModal'), {});
+                reportModal.show();
+            }
+            function abrirModalBanear(username) {
+    document.getElementById('usuarioABanear').value = username;
+    var modalBanearUsuario = new bootstrap.Modal(document.getElementById('modalBanearUsuario'));
+    modalBanearUsuario.show();
+}
+        </script>
+
+        <!-- Script para alternar el texto -->
+        <script>
+            function toggleText(event) {
+                // Evitar el comportamiento predeterminado del enlace
+                event.preventDefault();
+
+           
+                const shortText = event.target.closest('.card-body').querySelector('.short-text');
+                const fullText = event.target.closest('.card-body').querySelector('.full-text');
+
+        
+                if (fullText.classList.contains('d-none')) {
+                    fullText.classList.remove('d-none');
+                    shortText.classList.add('d-none');
+                    event.target.textContent = 'Ver menos';  // Cambiar el texto del botón
+                } else {
+                    fullText.classList.add('d-none');
+                    shortText.classList.remove('d-none');
+                    event.target.textContent = 'Ver más';  // Cambiar el texto del botón
+                }
+
+                // Redirigir al inicio de la página cuando se hace clic en "Ver menos"
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        </script>
+        <script th:src="@{/Js/main1.js}"></script>
+    </body>
+</html>

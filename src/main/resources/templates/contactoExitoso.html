@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="~{layout :: head}">
+        <title>¡Reporte enviado!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link th:rel="stylesheet" href="@{/css/StyleContactoExitoso.css}"/>
+    </head>
+ <body class="container-fluid mx-3">
+    <div th:replace="~{layout :: dialog}"></div>
+        
+        <!-- Incluir la barra lateral -->
+        <div th:replace="~{layout :: barraLateral}"></div>
+
+<main>
+    <div class="p-4 border-bottom border-secondary">
+        <h1 class="text-center">Contáctanos</h1>
+    </div>
+    <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="container">
+                <h1 th:text="${mensaje}">Resultado del envío</h1>
+                 <a th:href="@{/contactanos}">Volver al formulario de contacto</a>
+            </div>
+        </div>
+    </div>
+</main>
+    <script th:src="@{/js/main1.js}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+</body>

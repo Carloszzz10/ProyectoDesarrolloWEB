@@ -1,0 +1,93 @@
+.modal-section {
+    background-color: var(--colormodal);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 700px; /* Limitar el ancho del modal para diseño responsivo */
+    margin: 0 auto; /* Centrar el modal horizontalmente */
+}
+
+.user-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-info img {
+    width: 60px; /* Tamaño ligeramente mayor */
+    height: 60px;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-weight: 600; /* Aumentar un poco el peso para mayor visibilidad */
+    margin: 0;
+    color: var(--colortexto);
+}
+
+.user-email {
+    font-weight: 400;
+    color: var(--colortextodelmenu);
+    margin: 0;
+    font-size: 14px; /* Hacerlo un poco más pequeño */
+}
+
+.modal-text {
+    position: relative;
+}
+
+.textarea1 {
+    width: 100%; /* Usar todo el ancho del contenedor */
+    min-height: 150px; /* Incrementar el alto mínimo */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical; /* Permitir que el usuario ajuste el tamaño vertical */
+    font-family: 'Roboto', sans-serif;
+    color: var(--colortexto);
+    background-color: var(--colormainbody);
+    font-size: 16px;
+}
+
+.char-count {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 12px;
+    color: #999;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.upload-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: var(--botoncolor);
+}
+
+.file-info {
+    font-size: 14px;
+    color: #666;
+}
+
+.confirm-button {
+    background-color: var(--botoncolor);
+    color: var(--colorbotontexto);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.confirm-button:hover {
+    background-color: var(--colorbotonusuario);
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{layout :: head}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Foro UTP</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- FontAwesome CSS para iconos -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/anuncios.css}"/>
+        <style>
+            .card-img-top{
+        width: 30%;
+}
+        </style>
+    </head>
+
+ <body class="container-fluid mx-3">
+        <!-- Incluir el dialog -->
+        <div th:replace="~{layout :: dialog}"></div>
+
+        <div class="menu">
+            <ion-icon name="menu"></ion-icon>
+        </div>
+
+        <div class="barralateral minibarralateral">
+            <div>
+                <div class="nombrepag">
+                    <img id="cloud" class="logoimagen" th:src="@{/Imagenes/UtpForo.png}" alt="LogoImagen">
+                </div>
+                <button class="boton" id="updateDetails">
+                    <ion-icon name="add-circle-sharp"></ion-icon>
+                    <span>Publicación</span>
+                </button>
+            </div>
+            <nav class="navegacion">
+                <ul>
+                    <li>
+                        <a th:href="@{/}">
+                            <ion-icon name="home-sharp"></ion-icon>
+                            <span>INICIO</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/comunidad/comunidades}">
+                            <ion-icon name="logo-buffer"></ion-icon>
+                            <span>Comunidades</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/MisPublicaciones}">
+                            <ion-icon name="person-circle-sharp"></ion-icon>
+                            <span>Mis Publicaciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/Favoritos}">
+                            <ion-icon name="bookmarks-sharp"></ion-icon>
+                            <span>Favoritos</span>
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a th:href="@{/Nosotros}">
+                            <ion-icon name="information-circle-sharp"></ion-icon>
+                            <span>¿Quienes Somos?</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/contactanos}">
+                            <ion-icon name="mail-sharp"></ion-icon>
+                            <span>Contactanos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="active"  th:href="@{/Anuncios}">
+                            <ion-icon name="notifications-sharp"></ion-icon>
+                            <span>Anuncios</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div>
+                <div class="linea"></div>
+                <div class="modo-oscuro">
+                    <div class="info">
+                        <ion-icon name="moon-sharp"></ion-icon>
+                        <span>Modo Oscuro</span>
+                    </div>
+                    <div class="switch">
+                        <div class="base">
+                            <div class="circulo"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                    <div class="usuario">
+                        <img th:src="@{/Imagenes/Perfil.png}" alt="" class="imagenusuario">
+                        <button class="botonusuario">Inicia Sesión/Registrarse</button>
+                    </div>
+                </a>
+
+
+                <div sec:authorize="isAuthenticated()">
+                    <div class="usuario dropend">
+                        <img th:src="${imagePerfil != null ? imagePerfil : 'Imagenes/Perfil.png'}" alt="">
+                        <div class="info-usuario">
+                            <div class="nombreuser-email">
+                                <span sec:authentication="principal.username" class="email">Email</span>
+                            </div>
+                            <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-vertical-sharp" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item"  th:href="@{/PerfilUsuario}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="#">Configuración</a></li>
+                                <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                                <li sec:authorize="hasAnyAuthority('rol_2', 'rol_3')">
+                                    <a class="dropdown-item" th:href="@{/dashboard}">Ir al Dashboard</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div class="container mt-5 ">
+                <h2 class="mb-4">Anuncios Recientes</h2>
+                <div class="row">
+                    <div th:each="anuncio : ${anuncios.content}" class="col-12 mb-4">
+                        <div class="card">
+                            <!-- Mostrar imagen del anuncio si está disponible -->
+                            <center><img th:if="${anuncio.imageUrl != null}" th:src="${anuncio.imageUrl}" class="img-anuncio card-img-top" style="width: 20%;" alt="Imagen del anuncio"></center>
+                            <div class="card-body">
+                                <!-- Título del anuncio -->
+                                <h5 class="card-title" th:text="${anuncio.titulo}">Título del Anuncio</h5>
+                                <!-- Contenido del anuncio con "Ver más" -->
+                                <p class="card-text">
+                                    <span class="short-text" th:text="${#strings.abbreviate(anuncio.contenido, 100)}"></span>
+                                    <span class="full-text d-none" th:text="${anuncio.contenido}"></span>
+                                    <a href="#" class="see-more-link" onclick="toggleText(event)">Ver más</a>
+                                </p>
+                                <!-- Fecha formateada -->
+                                <p class="text-muted" th:text="${anuncio.getFormattedDate()}">Fecha de publicación</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+                                        function toggleText(event) {
+                                            event.preventDefault();  // Evita el comportamiento predeterminado del enlace
+                                            const link = event.target;  // Obtiene el enlace clicado
+                                            const cardBody = link.closest('.card-body');  // Encuentra la tarjeta padre más cercana
+                                            const shortText = cardBody.querySelector('.short-text');  // Obtiene el texto corto
+                                            const fullText = cardBody.querySelector('.full-text');  // Obtiene el texto completo
+
+                                            if (fullText.classList.contains('d-none')) {
+                                                // Mostrar texto completo
+                                                shortText.classList.add('d-none');  // Oculta el texto corto
+                                                fullText.classList.remove('d-none');  // Muestra el texto completo
+                                                link.textContent = 'Ver menos';  // Cambia el texto del enlace
+                                            } else {
+                                                // Mostrar texto corto
+                                                fullText.classList.add('d-none');  // Oculta el texto completo
+                                                shortText.classList.remove('d-none');  // Muestra el texto corto
+                                                link.textContent = 'Ver más';  // Cambia el texto del enlace
+                                            }
+                                        }
+        </script>
+
+    </body>
+</html>
+
+

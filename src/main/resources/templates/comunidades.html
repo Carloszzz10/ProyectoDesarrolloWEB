@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{layout :: head}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Foro UTP</title>
+        <link rel="stylesheet" th:href="@{/css/styleCategorias.css}" />
+    </head>
+
+    <body class="container-fluid">
+        <!-- Incluir el dialog -->
+        <div th:replace="~{layout :: dialog}"></div>
+
+        <div class="menu">
+            <ion-icon name="menu"></ion-icon>
+        </div>
+
+        <div class="barralateral minibarralateral">
+            <div>
+                <div class="nombrepag">
+                    <img id="cloud" class="logoimagen" th:src="@{/Imagenes/UtpForo.png}" alt="LogoImagen">
+                </div>
+                <button class="boton" id="updateDetails">
+                    <ion-icon name="add-circle-sharp"></ion-icon>
+                    <span>Publicación</span>
+                </button>
+            </div>
+            <nav class="navegacion">
+                <ul>
+                    <li>
+                        <a  th:href="@{/}">
+                            <ion-icon name="home-sharp"></ion-icon>
+                            <span>INICIO</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="active" th:href="@{/comunidad/comunidades}">
+                            <ion-icon name="logo-buffer"></ion-icon>
+                            <span>Comunidades</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/MisPublicaciones}">
+                            <ion-icon name="person-circle-sharp"></ion-icon>
+                            <span>Mis Publicaciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/Favoritos}">
+                            <ion-icon name="bookmarks-sharp"></ion-icon>
+                            <span>Favoritos</span>
+                        </a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a th:href="@{/Nosotros}">
+                            <ion-icon name="information-circle-sharp"></ion-icon>
+                            <span>¿Quienes Somos?</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/contactanos}">
+                            <ion-icon name="mail-sharp"></ion-icon>
+                            <span>Contactanos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/Anuncios}">
+                            <ion-icon name="notifications-sharp"></ion-icon>
+                            <span>Anuncios</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div>
+                <div class="linea"></div>
+                <div class="modo-oscuro">
+                    <div class="info">
+                        <ion-icon name="moon-sharp"></ion-icon>
+                        <span>Modo Oscuro</span>
+                    </div>
+                    <div class="switch">
+                        <div class="base">
+                            <div class="circulo"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <a sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                    <div class="usuario">
+                        <img th:src="@{/Imagenes/Perfil.png}" alt="" class="imagenusuario">
+                        <button class="botonusuario">Inicia Sesión/Registrarse</button>
+                    </div>
+                </a>
+
+
+                <div sec:authorize="isAuthenticated()">
+                    <div class="usuario dropend">
+                        <img th:src="${imagePerfil != null ? imagePerfil : 'Imagenes/Perfil.png'}" alt="">
+                        <div class="info-usuario">
+                            <div class="nombreuser-email">
+                                <span sec:authentication="principal.username" class="email">Email</span>
+                            </div>
+                            <ion-icon class="dropdown-toggle" id="dropdownMenuButton" name="ellipsis-vertical-sharp" data-bs-toggle="dropdown" aria-expanded="false"></ion-icon>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                             <li><a class="dropdown-item"  th:href="@{/PerfilUsuario}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="#">Configuración</a></li>
+                                <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                                <li sec:authorize="hasAnyAuthority('Moderador', 'Administrador')">
+                                    <a class="dropdown-item" th:href="@{/dashboard}">Ir al Dashboard</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div class="container">
+                <div class="text-center pt-2 fw-bold">
+                    <h2> Explora Todas las categorias que te Ofrece UTP Foro</h2>
+                </div>
+
+                <!-- Botón solo visible para administradores -->
+                <div sec:authorize="hasRole('Administrador')">
+                    <button class="boton" id="registrarComunidad">
+                        <a th:action="@{/comunidad/comunidades}" class="btn btn-primary mb-3">Registrar Comunidad</a>
+                    </button>
+                </div>
+
+                <h3 class="mt-5"><strong>CATEGORÍAS </strong></h3>
+                <div class="container"></div>
+                <div class="row">
+                    <div class="col-9">
+                        <p>
+                            Antes de explorar todas nuestras categorías, aquí te mostramos las más populares entre los estudiantes.
+                            Estas se destacan por el interés y
+                            la participación activa, y te permitirán conocer rápidamente las áreas más relevantes para nuestra
+                            comunidad.
+                        </p>          
+                        <hr>
+                        <a href="/comunidad/registrar" class="btn btn-info" sec:authorize="hasAnyAuthority('Administrador')">Registrar Nueva Comunidad</a>
+                    </div>
+                </div>
+
+                <br />
+
+              <div class="row">
+    <div class="col-md-4 mb-4" th:each="comunidad : ${comunidades}">
+    <div class="card h-100 border-light bg-dark text-light position-relative">
+        <img th:src="@{${comunidad.imagen}}" class="card-img-top" alt="..." height="190">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${comunidad.nombre}"></h5>
+            <p class="card-text" th:text="${comunidad.descripcion}"></p>
+            
+            <!-- Botón para unirse, solo aparece si no está unido -->
+            <form th:action="@{/comunidad/unirse}" method="post" 
+                  th:if="${#lists.contains(comunidadesUnidas, comunidad)} == false">
+                <input type="hidden" name="comunidadId" th:value="${comunidad.id}" />
+                <button type="submit" class="btn btn-outline-light">Unirse a Comunidad</button>
+            </form>
+            
+            <!-- Mensaje de unión y botón de ingreso, solo aparece si está unido -->
+            <div th:if="${#lists.contains(comunidadesUnidas, comunidad)}">
+                <p class="text-success">Ya estás unido a esta comunidad</p>
+                <a th:href="@{/comunidad/detalle/{id}(id=${comunidad.id})}" class="btn btn-sm btn-primary">Ingresar a la Comunidad</a>
+            </div>
+        </div>
+
+        <!-- Dropdown de opciones, aparece solo si está unido -->
+        <div class="dropdown position-absolute" style="top: 10px; right: 10px;" 
+             th:if="${#lists.contains(comunidadesUnidas, comunidad)}">
+            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                <li>
+                    <form th:action="@{/comunidad/salir}" method="post">
+                        <input type="hidden" name="comunidadId" th:value="${comunidad.id}" />
+                        <button class="dropdown-item text-danger" type="submit">Salir de la Comunidad</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</div>
+            </div>
+        </main>
+    </body>
+</html>
+
+

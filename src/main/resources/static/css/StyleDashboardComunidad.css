@@ -1,0 +1,248 @@
+/* Fuente general */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #4596e700; 
+    overflow-x: hidden;
+}
+
+/* Contenido */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #adb5bd33;
+}
+
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+    }
+}
+
+/* Barra lateral */
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+}
+
+/* Estilo de los elementos dentro de la barra lateral */
+.sidebar .nav-item {
+    width: 100%;
+}
+
+.sidebar .nav-link {
+    color: #adb5bd;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .nav-link.active {
+    color: #fff;
+    background-color: #495057;
+}
+
+.sidebar .nav-link:hover {
+    color: #fff;
+    background-color: #495057;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+}
+
+.sidebar .nav-link .badge {
+    float: right;
+    margin-top: 4px;
+}
+
+.sidebar .profile {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar .profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.sidebar .profile h4 {
+    color: #fff;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.sidebar .profile p {
+    color: #adb5bd;
+}
+
+/* Estilo del formulario */
+.card-body select {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.card-body img {
+    margin-bottom: 15px;
+}
+
+.card-body p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 16px;
+}
+
+/* Adaptación de la tabla */
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table-striped {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table-striped th, .table-striped td {
+    padding: 1rem;
+    text-align: left;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 576px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .card-body img {
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+    }
+}
+
+/* Botones */
+.btn-group .btn {
+    border-radius: 20px;
+}
+
+/* Estilo del pie de página */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 10px 0;
+    position: static;
+    width: 100%;
+    text-align: center;
+}
+
+/* Colores de fondo personalizados */
+.bg-success {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.bg-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.bg-info {
+    background-color: #17a2b8;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Estilo del cuadro de mensajes con desplazamiento */
+.mensaje-scroll {
+    max-height: 150px;
+    max-width: 900px;
+    overflow-y: auto; /* Permite el scroll vertical */
+    padding: 5px; /* Añade espacio interno para separar el texto */
+    border: 1px solid #ddd; /* Define un borde ligero para destacar la sección */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f8f9fa; /* Fondo suave */
+}
+
+.mensaje-scroll p {
+    white-space: normal; /* Permite que el texto se ajuste al ancho del contenedor */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 100;
+}
+
+.motivo {
+    font-weight: 700;
+}
+
+/* Estilo de los elementos de la lista */
+.list-group-item {
+    margin-bottom: 10px; /* Añade espacio entre cada elemento */
+    border: 1px solid #dee2e6; /* Define un borde claro */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #ffffff; /* Fondo blanco */
+}
+
+/* Ajustes de imagen redonda */
+.rounded-circle {
+    border-radius: 50%;
+    object-fit: cover; /* Asegura que la imagen se ajuste bien dentro del contenedor circular */
+}
+
+/* Canvas (gráficos) */
+canvas {
+    margin: 0 auto;
+    display: flex;
+    width: 100% !important;
+    height: 500px !important;
+}
+
+.row > .col-md-4 {
+    margin-top: 20px;
+}
