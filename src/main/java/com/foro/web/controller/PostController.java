@@ -68,6 +68,9 @@ public class PostController {
 
         Usuario usuario = usuarioRepository.findByUsuario(username);
 
+/*fefefefefefefefefef
+fefef*/
+
         if (usuario != null) {
             model.addAttribute("usuarioId", usuario.getId());
             model.addAttribute("imagePerfil", usuario.getImagePerfil());
